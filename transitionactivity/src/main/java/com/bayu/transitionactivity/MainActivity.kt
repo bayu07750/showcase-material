@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
         actions()
     }
 
-    private fun setupTransitionTransformContainer() {
-        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-        // Set up shared element transition and disable overlay so views don't show above system bars
-        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
-        window.sharedElementsUseOverlay = false
+    private fun initView() {
+        adapter = PhotosAdapter(photos = Data.photos, onItemPhotoCLicked = onItemPhotoClicked)
+
+        val sharedExis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        setList(listTypeGrid, sharedExis)
     }
 
     private fun actions() {
@@ -65,7 +65,10 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menuLogin -> {
-                    navigateToEmail()
+                    setupTransition()
+                    val options = ActivityOptions.makeSceneTransitionAnimation(this)
+                    val intent = Intent(this, EmailActivity::class.java)
+                    startActivity(intent, options.toBundle())
                     true
                 }
                 R.id.menuListType -> {
@@ -76,31 +79,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    private fun navigateToEmail() {
-        val axis = com.google.android.material.transition.platform.MaterialSharedAxis.Z
-
-        val exitTransition =
-            com.google.android.material.transition.platform.MaterialSharedAxis(axis, true)
-        exitTransition.addTarget(R.id.rootMain)
-        window.exitTransition = exitTransition
-
-        val reenterTransition =
-            com.google.android.material.transition.platform.MaterialSharedAxis(axis, false)
-        reenterTransition.addTarget(R.id.rootMain)
-        window.reenterTransition = reenterTransition
-
-        val options = ActivityOptions.makeSceneTransitionAnimation(this)
-        val intent = Intent(this, EmailActivity::class.java)
-        startActivity(intent, options.toBundle())
-    }
-
-    private fun initView() {
-        adapter = PhotosAdapter(photos = Data.photos, onItemPhotoCLicked = onItemPhotoClicked)
-
-        val sharedExis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        setList(listTypeGrid, sharedExis)
     }
 
     private fun setList(listTypeGrid: Boolean, transition: Transition) {
@@ -157,6 +135,27 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.photoTransitionDesc)
         )
         startActivity(intent, options.toBundle())
+    }
+
+    private fun setupTransitionTransformContainer() {
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+        // Set up shared element transition and disable overlay so views don't show above system bars
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        window.sharedElementsUseOverlay = false
+    }
+
+    private fun setupTransition() {
+        val axis = com.google.android.material.transition.platform.MaterialSharedAxis.Z
+
+        val exitTransition =
+            com.google.android.material.transition.platform.MaterialSharedAxis(axis, true)
+        exitTransition.addTarget(R.id.rootMain)
+        window.exitTransition = exitTransition
+
+        val reenterTransition =
+            com.google.android.material.transition.platform.MaterialSharedAxis(axis, false)
+        reenterTransition.addTarget(R.id.rootMain)
+        window.reenterTransition = reenterTransition
     }
 
     private fun resetTransition() {
