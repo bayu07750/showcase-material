@@ -13,4 +13,10 @@ class AddFragment : BaseFragment<FragmentAddBinding>() {
     ): FragmentAddBinding {
         return FragmentAddBinding.inflate(inflater, container, false)
     }
+
+    companion object {
+        val TAG: String = AddFragment::class.java.simpleName
+
+        fun getInstance(): AddFragment = AddFragment()
+    }
 }

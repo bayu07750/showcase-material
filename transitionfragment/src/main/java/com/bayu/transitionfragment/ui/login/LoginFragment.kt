@@ -13,4 +13,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     ): FragmentLoginBinding {
         return FragmentLoginBinding.inflate(inflater, container, false)
     }
+
+    companion object {
+        val TAG: String = LoginFragment::class.java.simpleName
+
+        fun getInstance(): LoginFragment = LoginFragment()
+    }
 }

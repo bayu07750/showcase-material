@@ -13,4 +13,10 @@ class EmailFragment : BaseFragment<FragmentEmailBinding>() {
     ): FragmentEmailBinding {
         return FragmentEmailBinding.inflate(inflater, container, false)
     }
+
+    companion object {
+        val TAG: String = EmailFragment::class.java.simpleName
+
+        fun getInstance(): EmailFragment = EmailFragment()
+    }
 }

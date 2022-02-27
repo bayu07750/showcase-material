@@ -1,7 +1,6 @@
 package com.bayu.transitionfragment.ui.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -9,16 +8,16 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     private var _binding: VB? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     abstract fun inflateLayout(inflater: LayoutInflater): VB
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         _binding = inflateLayout(layoutInflater)
 
         doBeforeSuperOnCreate()
 
-        super.onCreate(savedInstanceState, persistentState)
+        super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
 

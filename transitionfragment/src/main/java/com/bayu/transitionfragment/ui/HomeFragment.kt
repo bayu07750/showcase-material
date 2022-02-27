@@ -13,4 +13,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     ): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
+
+    companion object {
+        val TAG: String = HomeFragment::class.java.simpleName
+
+        fun getInstance(): HomeFragment = HomeFragment()
+    }
 }

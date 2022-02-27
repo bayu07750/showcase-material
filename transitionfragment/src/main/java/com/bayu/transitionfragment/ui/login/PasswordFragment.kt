@@ -13,4 +13,10 @@ class PasswordFragment : BaseFragment<FragmentPasswordBinding>() {
     ): FragmentPasswordBinding {
         return FragmentPasswordBinding.inflate(inflater, container, false)
     }
+
+    companion object {
+        val TAG: String = PasswordFragment::class.java.simpleName
+
+        fun getInstance(): PasswordFragment = PasswordFragment()
+    }
 }

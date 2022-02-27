@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private var _binding: VB? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     abstract fun inflateLayout(inflater: LayoutInflater, container: ViewGroup?): VB
 
