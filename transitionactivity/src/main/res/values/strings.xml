@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TransitionActivity</string>
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur atque beatae debitis eaque est exercitationem nesciunt rerum temporibus tenetur vero? Alias architecto atque consequatur consequuntur corporis, cum dolorum eaque earum eos error excepturi fuga harum incidunt iusto magni nihil nobis odio officia officiis praesentium provident quae quisquam quos reprehenderit sequi tempore ut? At corporis culpa nostrum ullam? Ad alias, atque consequuntur eius error exercitationem explicabo in labore nostrum perferendis provident quam sunt tempore totam velit, voluptates voluptatibus. Accusamus consectetur cupiditate dolor dolorum eaque esse, ex harum ipsa labore molestias nemo officia officiis quam quas quasi quibusdam ratione sapiente sequi ullam?</string>
+    <string name="shared_element_desc">Shared_Element_End Root</string>
+    <string name="photoTransitionDesc">photo_transition</string>
+</resources>

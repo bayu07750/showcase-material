@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShowcaseBtnComponents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Showcase Button Components"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShowcaseTextStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Showcase Text Styles"
+        app:layout_constraintEnd_toEndOf="@+id/btnShowcaseBtnComponents"
+        app:layout_constraintStart_toStartOf="@+id/btnShowcaseBtnComponents"
+        app:layout_constraintTop_toBottomOf="@+id/btnShowcaseBtnComponents" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnToggleFabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toggle Floating Action Bar"
+        app:layout_constraintEnd_toEndOf="@+id/btnShowcaseTextStyles"
+        app:layout_constraintStart_toStartOf="@+id/btnShowcaseTextStyles"
+        app:layout_constraintTop_toBottomOf="@+id/btnShowcaseTextStyles" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="Add"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

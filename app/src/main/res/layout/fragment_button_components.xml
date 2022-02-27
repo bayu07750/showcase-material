@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ButtonComponentsFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContainedButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Contained Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTextButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Text Button"
+        app:layout_constraintEnd_toEndOf="@+id/btnContainedButton"
+        app:layout_constraintStart_toStartOf="@+id/btnContainedButton"
+        app:layout_constraintTop_toBottomOf="@+id/btnContainedButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnOutlinedButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Outlined Button"
+        app:layout_constraintEnd_toEndOf="@+id/btnTextButton"
+        app:layout_constraintStart_toStartOf="@+id/btnTextButton"
+        app:layout_constraintTop_toBottomOf="@+id/btnTextButton" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/btnToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@id/btnOutlinedButton"
+        app:layout_constraintStart_toStartOf="@id/btnOutlinedButton"
+        app:layout_constraintTop_toBottomOf="@id/btnOutlinedButton">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAction"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnJourney"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Journey" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnComedy"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comedy" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContainedButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Contained Button 2"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="@id/btnToggleButton"
+        app:layout_constraintStart_toStartOf="@id/btnToggleButton"
+        app:layout_constraintTop_toBottomOf="@id/btnToggleButton"
+        app:rippleColor="@null"
+        app:shapeAppearance="@style/CircleShapeAppearance" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGradientButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_gradient"
+        android:text="Gradient Button"
+        android:textAllCaps="false"
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnContainedButton2"
+        app:layout_constraintStart_toStartOf="@+id/btnContainedButton2"
+        app:layout_constraintTop_toBottomOf="@+id/btnContainedButton2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
