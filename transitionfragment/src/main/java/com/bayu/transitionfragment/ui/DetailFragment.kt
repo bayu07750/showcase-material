@@ -21,6 +21,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        actions()
+    }
+
+    private fun actions() {
+        with(binding) {
+            toolbar.setNavigationOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
+        }
     }
 
     private fun initView() {
