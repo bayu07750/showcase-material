@@ -44,11 +44,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        exitTransition = Hold()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +64,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun actions() {
         with(binding) {
             floatingActionButton.setOnClickListener {
+                clearTransition()
+                addHoldExitTransition()
+
                 val addFragment = AddFragment.getInstance().apply {
                     sharedElementEnterTransition = MaterialContainerTransform()
                 }
@@ -88,6 +86,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         true
                     }
                     R.id.menuLogin -> {
+                        clearTransition()
+                        addMaterialSharedExisTransition(MaterialSharedAxis.Z)
+
                         val emailFragment = EmailFragment.getInstance()
                         parentFragmentManager.commit {
                             replace(R.id.fragment_container_view, emailFragment, LoginFragment.TAG)
@@ -116,6 +117,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val onItemPhotoClicked: (String, String, View) -> Unit =
         { photo, transitionName, view ->
+            clearTransition()
+            addHoldExitTransition()
+
             val transform = MaterialContainerTransform(requireContext(), true).apply {
                 setAllContainerColors(
                     MaterialColors.getColor(
@@ -178,6 +182,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             }
         }
+    }
+
+    private fun addHoldExitTransition() {
+        exitTransition = Hold()
+    }
+
+    private fun addMaterialSharedExisTransition(axis: Int) {
+        exitTransition = MaterialSharedAxis(axis, true)
+        reenterTransition = MaterialSharedAxis(axis, false)
+    }
+
+    private fun clearTransition() {
+        exitTransition = null
+        reenterTransition = null
     }
 
     companion object {
