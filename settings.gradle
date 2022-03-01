@@ -16,3 +16,4 @@ rootProject.name = "Material"
 include ':app'
 include ':transitionactivity'
 include ':transitionfragment'
+include ':bottomsheetapp'
