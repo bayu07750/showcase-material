@@ -19,6 +19,7 @@ import com.bayu.transitionfragment.R
 import com.bayu.transitionfragment.adapater.PhotosAdapter
 import com.bayu.transitionfragment.databinding.FragmentHomeBinding
 import com.bayu.transitionfragment.ui.base.BaseFragment
+import com.bayu.transitionfragment.ui.login.EmailFragment
 import com.bayu.transitionfragment.ui.login.LoginFragment
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.Hold
@@ -87,9 +88,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         true
                     }
                     R.id.menuLogin -> {
-                        val loginFragment = LoginFragment.getInstance()
+                        val emailFragment = EmailFragment.getInstance()
                         parentFragmentManager.commit {
-                            replace(R.id.fragment_container_view, loginFragment, LoginFragment.TAG)
+                            replace(R.id.fragment_container_view, emailFragment, LoginFragment.TAG)
                             addToBackStack(null)
                             setReorderingAllowed(true)
                         }
