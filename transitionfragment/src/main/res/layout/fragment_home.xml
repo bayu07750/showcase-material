@@ -44,6 +44,7 @@
         android:clickable="true"
         android:contentDescription="Add"
         android:focusable="true"
+        android:transitionName="@string/shared_element_fab"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

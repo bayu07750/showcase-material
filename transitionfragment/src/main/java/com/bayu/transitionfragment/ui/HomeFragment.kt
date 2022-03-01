@@ -20,6 +20,9 @@ import com.bayu.transitionfragment.adapater.PhotosAdapter
 import com.bayu.transitionfragment.databinding.FragmentHomeBinding
 import com.bayu.transitionfragment.ui.base.BaseFragment
 import com.bayu.transitionfragment.ui.login.LoginFragment
+import com.google.android.material.color.MaterialColors
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.collect
@@ -40,6 +43,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = Hold()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,16 +61,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             onItemPhotoClicked = onItemPhotoClicked,
         )
 
-        val zAxis = MaterialSharedAxis.Z
-        val transition = MaterialSharedAxis(zAxis, true)
+        val transition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         setList(listTypeGrid, transition)
     }
 
     private fun actions() {
         with(binding) {
             floatingActionButton.setOnClickListener {
-                val addFragment = AddFragment.getInstance()
+                val addFragment = AddFragment.getInstance().apply {
+                    sharedElementEnterTransition = MaterialContainerTransform()
+                }
                 parentFragmentManager.commit {
+                    addSharedElement(it, resources.getString(R.string.shared_element_fab))
                     replace(R.id.fragment_container_view, addFragment, AddFragment.TAG)
                     addToBackStack(null)
                     setReorderingAllowed(true)
@@ -103,14 +113,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private val onItemPhotoClicked: (String, View) -> Unit = { photo, _ ->
-        val detailFragment = DetailFragment.getInstance(photo)
-        parentFragmentManager.commit {
-            replace(R.id.fragment_container_view, detailFragment, DetailFragment.TAG)
-            addToBackStack(null)
-            setReorderingAllowed(true)
+    private val onItemPhotoClicked: (String, String, View) -> Unit =
+        { photo, transitionName, view ->
+            val transform = MaterialContainerTransform(requireContext(), true).apply {
+                setAllContainerColors(
+                    MaterialColors.getColor(
+                        binding.rootMain,
+                        com.google.android.material.R.attr.colorSurface
+                    )
+                )
+            }
+
+            val detailFragment = DetailFragment.getInstance(photo, transitionName).apply {
+                sharedElementEnterTransition = transform
+            }
+
+            parentFragmentManager.commit {
+                addSharedElement(view, transitionName)
+                replace(R.id.fragment_container_view, detailFragment, DetailFragment.TAG)
+                addToBackStack(null)
+                setReorderingAllowed(true)
+            }
         }
-    }
 
     private fun setList(listTypeGrid: Boolean, transition: Transition) {
         this.listTypeGrid = listTypeGrid
@@ -124,7 +148,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             transition.addTarget(currentRv)
         }
 
-        TransitionManager.beginDelayedTransition(rv, transition)
+        TransitionManager.beginDelayedTransition(binding.listContainer, transition)
 
         rv.adapter = photosAdapter
 

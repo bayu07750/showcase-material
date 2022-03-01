@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bayu.transitionfragment.databinding.ItemPhotoBinding
+import java.util.*
 
 class PhotosAdapter(
-    private val onItemPhotoClicked: (String, View) -> Unit,
+    private val onItemPhotoClicked: (String, String, View) -> Unit,
 ) : ListAdapter<String, PhotosAdapter.PhotoViewHolder>(DIFF_CALLBACK) {
 
     inner class PhotoViewHolder(
@@ -18,10 +19,13 @@ class PhotosAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: String) {
+            val transitionName = UUID.randomUUID().toString()
+
+            binding.root.transitionName = transitionName
+            binding.root.setOnClickListener { onItemPhotoClicked.invoke(photo, transitionName, it) }
             binding.ivPhoto.load(photo) {
                 crossfade(true)
             }
-            binding.ivPhoto.setOnClickListener { onItemPhotoClicked.invoke(photo, it) }
         }
     }
 

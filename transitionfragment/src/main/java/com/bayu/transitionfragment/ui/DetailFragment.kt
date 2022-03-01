@@ -34,19 +34,22 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private fun initView() {
         val photo = requireArguments().getString(PHOTO_KEY) ?: ""
-
         binding.contentDetailPhoto.ivPhoto.load(photo) {
             crossfade(true)
         }
+
+        val transitionName = requireArguments().getString(KEY_TRANSITION_NAME)
+        binding.root.transitionName = transitionName
     }
 
     companion object {
         private const val PHOTO_KEY = "photo_key"
+        private const val KEY_TRANSITION_NAME = "photo_transition"
 
         val TAG: String = DetailFragment::class.java.simpleName
 
-        fun getInstance(photo: String): DetailFragment {
-            val bundle = bundleOf(PHOTO_KEY to photo)
+        fun getInstance(photo: String, transitionName: String): DetailFragment {
+            val bundle = bundleOf(PHOTO_KEY to photo, KEY_TRANSITION_NAME to transitionName)
             return DetailFragment().apply {
                 arguments = bundle
             }
