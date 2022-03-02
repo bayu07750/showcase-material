@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/bottomsheetapp" />
             <option value="$PROJECT_DIR$/transitionactivity" />
             <option value="$PROJECT_DIR$/transitionfragment" />
+            <option value="$PROJECT_DIR$/transitionnavigation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
