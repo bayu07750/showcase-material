@@ -5,7 +5,6 @@
     android:id="@+id/rootMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionGroup="true"
     tools:context=".ui.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -44,6 +43,7 @@
         android:clickable="true"
         android:contentDescription="Add"
         android:focusable="true"
+        android:transitionName="@string/add_photo_transition"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

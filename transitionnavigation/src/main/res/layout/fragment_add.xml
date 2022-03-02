@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
+    android:transitionName="@string/add_photo_transition"
     tools:context=".ui.AddFragment">
 
     <TextView

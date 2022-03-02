@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ import com.bayu.transitionnavigation.databinding.FragmentHomeBinding
 import com.bayu.transitionnavigation.ui.adapter.PhotosAdapter
 import com.bayu.transitionnavigation.ui.base.BaseFragment
 import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.platform.Hold
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,19 +58,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         setupRvPhotos(listTypeGrid, MaterialFadeThrough())
     }
 
-    private val onItemPhotoClicked: (Photo, String, View) -> Unit = { photo, transitionName, _ ->
-        clearTransitionMaterialSharedAxis()
+    private val onItemPhotoClicked: (Photo, String, View) -> Unit = { photo, transitionName, view ->
+        clearTransition()
+
+        exitTransition = Hold().apply {
+            addTarget(binding.rootMain)
+        }
+
+        val extras = FragmentNavigatorExtras(
+            view to transitionName
+        )
         val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
             photo, transitionName
         )
-        findNavController().navigate(directions)
+        findNavController().navigate(directions, extras)
     }
 
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-                viewModel.photos.collect { photos ->
-                    photosAdapter.submitList(photos)
+                viewModel.photos.collect {
+                    photosAdapter.submitList(it)
                 }
             }
         }
@@ -76,13 +86,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun actions() {
         with(binding) {
-            floatingActionButton.setOnClickListener {
-                clearTransitionMaterialSharedAxis()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFragment())
+            floatingActionButton.setOnClickListener { view ->
+                clearTransition()
+                addHoldTransition()
+
+                val extras = FragmentNavigatorExtras(
+                    view to resources.getString(R.string.add_photo_transition)
+                )
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToAddFragment(),
+                    extras
+                )
             }
 
             toolbar.setOnMenuItemClickListener {
-                clearTransitionMaterialSharedAxis()
+                clearTransition()
+
                 when (it.itemId) {
                     R.id.menuListType -> {
                         setupRvPhotos(!listTypeGrid, MaterialFadeThrough())
@@ -144,12 +163,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun addHoldTransition() {
+        exitTransition = Hold()
+    }
+
     private fun addTransitionMaterialSharedAxis() {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
-    fun clearTransitionMaterialSharedAxis() {
+    private fun clearTransition() {
         exitTransition = null
         reenterTransition = null
     }

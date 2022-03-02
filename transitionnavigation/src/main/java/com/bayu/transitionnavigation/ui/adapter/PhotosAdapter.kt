@@ -61,3 +61,44 @@ class PhotosAdapter(
     }
 
 }
+
+class PhotosAdapter2(
+    private val photos: List<Photo>,
+    private val onItemPhotoClicked: (Photo, String, View) -> Unit,
+) : RecyclerView.Adapter<PhotosAdapter2.PhotoViewHolder>() {
+    inner class PhotoViewHolder(
+        private val binding: ItemPhotoBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(photo: Photo) {
+            binding.ivPhoto.load(photo.url) {
+                crossfade(true)
+            }
+
+            val tm = photo.name.lowercase() + "_transition"
+            binding.root.transitionName = tm
+
+            binding.root.setOnClickListener { view ->
+                onItemPhotoClicked.invoke(photo, tm, view)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
+        return PhotoViewHolder(
+            ItemPhotoBinding.inflate(
+                LayoutInflater.from(
+                    parent.context,
+                ),
+                parent,
+                false,
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
+        holder.bind(photos[position])
+    }
+
+    override fun getItemCount(): Int = photos.size
+}
