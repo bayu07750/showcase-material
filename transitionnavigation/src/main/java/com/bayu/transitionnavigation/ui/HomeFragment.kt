@@ -13,11 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.bayu.transitionnavigation.R
 import com.bayu.transitionnavigation.data.Photo
 import com.bayu.transitionnavigation.databinding.FragmentHomeBinding
 import com.bayu.transitionnavigation.ui.adapter.PhotosAdapter
 import com.bayu.transitionnavigation.ui.base.BaseFragment
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -49,10 +53,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             onItemPhotoClicked = onItemPhotoClicked,
         )
 
-        setupRvPhotos(listTypeGrid)
+        setupRvPhotos(listTypeGrid, MaterialFadeThrough())
     }
 
     private val onItemPhotoClicked: (Photo, String, View) -> Unit = { photo, transitionName, _ ->
+        clearTransitionMaterialSharedAxis()
         val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
             photo, transitionName
         )
@@ -72,16 +77,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun actions() {
         with(binding) {
             floatingActionButton.setOnClickListener {
+                clearTransitionMaterialSharedAxis()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFragment())
             }
 
             toolbar.setOnMenuItemClickListener {
+                clearTransitionMaterialSharedAxis()
                 when (it.itemId) {
                     R.id.menuListType -> {
-                        setupRvPhotos(!listTypeGrid)
+                        setupRvPhotos(!listTypeGrid, MaterialFadeThrough())
                         true
                     }
                     R.id.menuLogin -> {
+                        addTransitionMaterialSharedAxis()
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEmailFragment())
                         true
                     }
@@ -91,10 +99,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun setupRvPhotos(listTypeGrid: Boolean) {
+    private fun setupRvPhotos(listTypeGrid: Boolean, transition: Transition) {
         this.listTypeGrid = listTypeGrid
 
         val rv = createRvPhotos(listTypeGrid)
+
+        transition.addTarget(rv)
+
+        val currentRv = binding.listContainer.getChildAt(0)
+        if (currentRv != null) {
+            transition.addTarget(currentRv)
+        }
+
+        TransitionManager.beginDelayedTransition(binding.listContainer, transition)
 
         rv.adapter = photosAdapter
 
@@ -125,6 +142,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             }
         }
+    }
+
+    private fun addTransitionMaterialSharedAxis() {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+    }
+
+    fun clearTransitionMaterialSharedAxis() {
+        exitTransition = null
+        reenterTransition = null
     }
 
     companion object {
