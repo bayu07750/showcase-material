@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -26,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private lateinit var photosAdapter: PhotosAdapter
 
-    private val listTypeGrid = true
+    private var listTypeGrid = true
 
     override fun inflateLayout(
         inflater: LayoutInflater,
@@ -48,12 +49,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             onItemPhotoClicked = onItemPhotoClicked,
         )
 
-        val rvPhotos = createRvPhotos(listTypeGrid)
-        binding.listContainer.addView(rvPhotos)
+        setupRvPhotos(listTypeGrid)
     }
 
-    private val onItemPhotoClicked: (Photo, String, View) -> Unit = { photo, transitionName, view ->
-
+    private val onItemPhotoClicked: (Photo, String, View) -> Unit = { photo, transitionName, _ ->
+        val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+            photo, transitionName
+        )
+        findNavController().navigate(directions)
     }
 
     private fun observe() {
@@ -69,20 +72,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun actions() {
         with(binding) {
             floatingActionButton.setOnClickListener {
-
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFragment())
             }
 
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menuListType -> {
+                        setupRvPhotos(!listTypeGrid)
                         true
                     }
                     R.id.menuLogin -> {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEmailFragment())
                         true
                     }
                     else -> false
                 }
             }
+        }
+    }
+
+    private fun setupRvPhotos(listTypeGrid: Boolean) {
+        this.listTypeGrid = listTypeGrid
+
+        val rv = createRvPhotos(listTypeGrid)
+
+        rv.adapter = photosAdapter
+
+        with(binding.listContainer) {
+            removeAllViews()
+            addView(rv)
         }
     }
 

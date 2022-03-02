@@ -1,5 +1,7 @@
 package com.bayu.transitionnavigation.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlin.random.Random
 
 object Data {
@@ -53,7 +55,8 @@ object Data {
 
 }
 
+@Parcelize
 data class Photo(
     val name: String,
     val url: String,
-)
+): Parcelable
