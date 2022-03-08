@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cat_bottomsheet_coordinator_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bottomsheet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Show modal BottomSheetDialog" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/cat_fullscreen_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottomsheet_button"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp"
+            android:switchMinWidth="56dp"
+            android:text="Fullscreen Mode"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/cat_bottomsheet_expansion_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cat_fullscreen_switch"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp"
+            android:switchMinWidth="56dp"
+            android:text="Restrict expansion"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_drawer"
+        style="@style/Widget.Material3.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:backgroundTint="?attr/colorSurface"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="200dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Persistent BottomSheet"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/cat_persistent_bottomsheet_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="STATE_COLLAPSED"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/cat_bottomsheet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cat_persistent_bottomsheet_state"
+            android:layout_centerHorizontal="true"
+            android:text="Enabled" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/cat_bottomsheet_enabled_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cat_bottomsheet_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:text="Enabled" />
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

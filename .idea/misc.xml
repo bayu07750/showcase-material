@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_text_styles.xml" value="0.25833333333333336" />
         <entry key="bottomsheetapp/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="bottomsheetapp/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="transitionactivity/src/main/res/drawable/ic_round_menu_24.xml" value="0.115" />
         <entry key="transitionactivity/src/main/res/layout/activity_detail.xml" value="0.2046875" />
         <entry key="transitionactivity/src/main/res/layout/activity_detail_photo.xml" value="0.2046875" />
